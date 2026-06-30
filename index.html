@@ -215,9 +215,9 @@ transform:rotate(20deg);animation:iconLight 5s linear infinite;
 
 .mentorHeader{display:flex;flex-direction:column;align-items:center;margin-bottom:34px;}
 .mentorHeroAvatar{
-width:108px;height:108px;border-radius:34px;
+width:180px;height:180px;border-radius:44px;
 display:flex;align-items:center;justify-content:center;
-font-size:54px;margin-bottom:24px;
+font-size:80px;margin-bottom:24px;
 border:1px solid rgba(255,255,255,.08);
 box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 70px rgba(0,0,0,.45),0 0 60px rgba(10,180,100,.18);
 position:relative;overflow:hidden;
@@ -225,7 +225,7 @@ animation:floatAvatar 4s ease-in-out infinite;
 transition:.4s;
 }
 .mentorHeroAvatar img{
-width:100%;height:100%;object-fit:cover;border-radius:34px;
+width:100%;height:100%;object-fit:cover;border-radius:44px;
 }
 .mentorHeroAvatar::before{
 content:"";position:absolute;inset:-40%;
@@ -390,9 +390,9 @@ html{scroll-behavior:smooth;}
     <span>Назад</span>
   </div>
   <div class="mentorHeader">
-    <div id="mentorAvatar" class="mentorHeroAvatar" style="background:linear-gradient(135deg,#2d2108,#6b4d12)">💪</div>
     <div id="mentorName" class="mentorHeroName">Алекс Хормози</div>
     <div id="mentorRole" class="mentorHeroRole">Предприниматель</div>
+    <div id="mentorAvatar" class="mentorHeroAvatar" style="background:linear-gradient(135deg,#2d2108,#6b4d12);margin-top:20px;">💪</div>
   </div>
   <div class="infoBlock">
     <div class="blockTitle">🔥 ИСТОРИЯ</div>
@@ -406,7 +406,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v6)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v8)</button>
 </div>
 
 <div id="page-premium" class="page">
@@ -517,7 +517,7 @@ function openMentor(id){
   const m=mentors[id];
   const avatarEl=document.getElementById("mentorAvatar");
   if(m.photo){
-    avatarEl.innerHTML='<img src="'+m.photo+'" alt="'+m.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:34px;">';
+    avatarEl.innerHTML='<img src="'+m.photo+'" alt="'+m.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:44px;">';
     avatarEl.style.background="transparent";
   }else{
     avatarEl.innerHTML=m.emoji;
