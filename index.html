@@ -60,7 +60,6 @@ animation:glowMove 8s ease-in-out infinite alternate;
 100%{transform:translate(20px,-20px);}
 }
 
-/* LOADER */
 #loader{
 position:fixed;inset:0;
 background:#080d0f;
@@ -82,7 +81,6 @@ animation:loaderPulse 1.5s infinite;
 0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}
 }
 
-/* PAGES */
 .page{
 position:absolute;inset:0;
 display:none;flex-direction:column;
@@ -95,7 +93,6 @@ transition:opacity .35s cubic-bezier(.2,.8,.2,1),transform .35s cubic-bezier(.2,
 .page::-webkit-scrollbar{display:none;}
 .page.active{display:flex;opacity:1;visibility:visible;pointer-events:auto;transform:none;}
 
-/* LOGO */
 .logo{
 width:68px;height:68px;border-radius:22px;
 display:flex;align-items:center;justify-content:center;
@@ -116,7 +113,6 @@ h1{font-size:40px;line-height:1.04;font-weight:800;letter-spacing:-1px;margin-bo
 .green{color:var(--green);}
 .subtitle{font-size:17px;line-height:1.7;color:var(--gray);margin-bottom:34px;}
 
-/* CARD */
 .card{
 position:relative;
 background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.025));
@@ -130,7 +126,6 @@ content:"";position:absolute;left:0;top:0;right:0;height:1px;
 background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
 }
 
-/* BOTTOM BUTTON */
 .bottomButton{
 position:fixed;left:18px;right:18px;
 bottom:calc(18px + env(safe-area-inset-bottom));
@@ -151,7 +146,6 @@ transform:skewX(-20deg);animation:buttonLight 4s linear infinite;
 .bottomButton:active{transform:scale(.98);filter:brightness(.95);}
 .bottomButton:hover{transform:translateY(-2px);}
 
-/* HOME */
 .homeHero{position:relative;margin-top:10px;z-index:2;}
 .homeHero::after{
 content:"";position:absolute;
@@ -182,7 +176,6 @@ animation:shine 7s linear infinite;
 .mentorRoleMini{font-size:12px;color:var(--gray);}
 .mentorsPreview{padding-top:26px;padding-bottom:28px;margin-top:14px;}
 
-/* MENTORS LIST */
 .backButton{display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.65);font-size:16px;font-weight:600;margin-bottom:28px;cursor:pointer;}
 .pageTitle{font-size:38px;font-weight:800;letter-spacing:-1px;margin-bottom:10px;}
 .pageSubtitle{font-size:17px;line-height:1.7;color:var(--gray);margin-bottom:34px;}
@@ -220,7 +213,6 @@ transform:rotate(20deg);animation:iconLight 5s linear infinite;
 .badgeBlue{background:rgba(74,158,224,.18);color:#4A9EE0;}
 .mentorArrow{font-size:28px;color:rgba(255,255,255,.35);}
 
-/* MENTOR CARD */
 .mentorHeader{display:flex;flex-direction:column;align-items:center;margin-bottom:34px;}
 .mentorHeroAvatar{
 width:108px;height:108px;border-radius:34px;
@@ -252,7 +244,6 @@ box-shadow:0 30px 60px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.05);
 .blockText{font-size:16px;line-height:1.8;color:rgba(255,255,255,.82);}
 .mentorQuote{font-size:17px;line-height:1.9;font-style:italic;padding-left:18px;border-left:3px solid var(--green);color:white;}
 
-/* PREMIUM */
 .premiumHero{text-align:center;margin-bottom:34px;}
 .premiumStar{
 width:90px;height:90px;margin:auto;margin-bottom:22px;border-radius:30px;
@@ -291,7 +282,6 @@ font-size:14px;font-weight:800;flex:none;
 box-shadow:0 0 18px rgba(10,180,100,.3);
 }
 
-/* ANIMATIONS */
 .card,.mentorCard,.infoBlock,.planCard{animation:cardShow .45s;animation-fill-mode:both;}
 .card:nth-child(1){animation-delay:.05s;}
 .card:nth-child(2){animation-delay:.10s;}
@@ -308,7 +298,6 @@ html{scroll-behavior:smooth;}
   <div class="loaderText">Business Mentor AI</div>
 </div>
 
-<!-- HOME -->
 <div id="page-home" class="page active">
   <div class="homeHero">
     <div class="logo">💼</div>
@@ -339,7 +328,6 @@ html{scroll-behavior:smooth;}
   <button class="bottomButton" onclick="showPage('mentors')">ВЫБРАТЬ НАСТАВНИКА →</button>
 </div>
 
-<!-- MENTORS -->
 <div id="page-mentors" class="page">
   <div class="backButton" onclick="showPage('home')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -393,7 +381,6 @@ html{scroll-behavior:smooth;}
   <button class="bottomButton" onclick="showPage('premium')">⭐ ПОЛУЧИТЬ PREMIUM</button>
 </div>
 
-<!-- MENTOR CARD -->
 <div id="page-card" class="page">
   <div class="backButton" onclick="showPage('mentors')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -416,10 +403,9 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v3)</button>
 </div>
 
-<!-- PREMIUM -->
 <div id="page-premium" class="page">
   <div class="backButton" onclick="showPage('mentors')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -536,7 +522,13 @@ function openMentor(id){
   btn.style.background=m.button;
   btn.style.color=m.buttonColor;
   btn.onclick=function(){
-    tg.openTelegramLink("https://t.me/businessmen_ai_bot?start="+id);
+    try{
+      alert("Кнопка нажата! Отправляю: "+id);
+      tg.sendData(JSON.stringify({mentor:id}));
+      tg.close();
+    }catch(err){
+      alert("Ошибка: "+err.message);
+    }
   };
   showPage("card");
 }
@@ -548,7 +540,8 @@ function selectPlan(el,plan){
 }
 
 function buyPremium(){
-  tg.openTelegramLink("https://t.me/businessmen_ai_bot?start=premium_"+selectedPlan);
+  tg.sendData(JSON.stringify({mentor:"premium",plan:selectedPlan}));
+  tg.close();
 }
 
 document.querySelectorAll(".mentorCard,.planCard,.card,.infoBlock").forEach(el=>{
