@@ -403,7 +403,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v4)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v5)</button>
 </div>
 
 <div id="page-premium" class="page">
@@ -523,7 +523,8 @@ function openMentor(id){
   btn.style.background=m.button;
   btn.style.color=m.buttonColor;
   btn.onclick=function(){
-    tg.openTelegramLink(BOT+"?start="+id);
+    tg.sendData(JSON.stringify({mentor:id}));
+    tg.close();
   };
   showPage("card");
 }
@@ -535,7 +536,8 @@ function selectPlan(el,plan){
 }
 
 function buyPremium(){
-  tg.openTelegramLink(BOT+"?start=premium_"+selectedPlan);
+  tg.sendData(JSON.stringify({mentor:"premium",plan:selectedPlan}));
+  tg.close();
 }
 
 document.querySelectorAll(".mentorCard,.planCard,.card,.infoBlock").forEach(el=>{
