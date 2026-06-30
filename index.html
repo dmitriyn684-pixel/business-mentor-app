@@ -224,6 +224,9 @@ position:relative;overflow:hidden;
 animation:floatAvatar 4s ease-in-out infinite;
 transition:.4s;
 }
+.mentorHeroAvatar img{
+width:100%;height:100%;object-fit:cover;border-radius:34px;
+}
 .mentorHeroAvatar::before{
 content:"";position:absolute;inset:-40%;
 background:linear-gradient(130deg,transparent,rgba(255,255,255,.18),transparent);
@@ -403,7 +406,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v5)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v6)</button>
 </div>
 
 <div id="page-premium" class="page">
@@ -455,6 +458,7 @@ try {
 const mentors = {
   hormozi:{
     emoji:"💪",
+    photo:"hormozi.png",
     name:"Алекс Хормози",
     role:"Предприниматель · Инвестор · Автор",
     avatar:"linear-gradient(135deg,#2d2108,#6b4d12)",
@@ -511,8 +515,14 @@ function showPage(page){
 
 function openMentor(id){
   const m=mentors[id];
-  document.getElementById("mentorAvatar").innerHTML=m.emoji;
-  document.getElementById("mentorAvatar").style.background=m.avatar;
+  const avatarEl=document.getElementById("mentorAvatar");
+  if(m.photo){
+    avatarEl.innerHTML='<img src="'+m.photo+'" alt="'+m.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:34px;">';
+    avatarEl.style.background="transparent";
+  }else{
+    avatarEl.innerHTML=m.emoji;
+    avatarEl.style.background=m.avatar;
+  }
   document.getElementById("mentorName").innerHTML=m.name;
   document.getElementById("mentorRole").innerHTML=m.role;
   document.getElementById("mentorHistory").innerHTML=m.history;
