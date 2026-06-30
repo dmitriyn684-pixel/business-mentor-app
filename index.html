@@ -403,7 +403,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v3)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v4)</button>
 </div>
 
 <div id="page-premium" class="page">
@@ -493,6 +493,7 @@ const mentors = {
 
 let currentPage="home";
 let selectedPlan="month";
+const BOT="https://t.me/businessmen_ai_bot";
 
 function showPage(page){
   if(page===currentPage) return;
@@ -522,13 +523,7 @@ function openMentor(id){
   btn.style.background=m.button;
   btn.style.color=m.buttonColor;
   btn.onclick=function(){
-    try{
-      alert("Кнопка нажата! Отправляю: "+id);
-      tg.sendData(JSON.stringify({mentor:id}));
-      tg.close();
-    }catch(err){
-      alert("Ошибка: "+err.message);
-    }
+    tg.openTelegramLink(BOT+"?start="+id);
   };
   showPage("card");
 }
@@ -540,8 +535,7 @@ function selectPlan(el,plan){
 }
 
 function buyPremium(){
-  tg.sendData(JSON.stringify({mentor:"premium",plan:selectedPlan}));
-  tg.close();
+  tg.openTelegramLink(BOT+"?start=premium_"+selectedPlan);
 }
 
 document.querySelectorAll(".mentorCard,.planCard,.card,.infoBlock").forEach(el=>{
