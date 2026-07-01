@@ -236,6 +236,14 @@ animation:shine 8s linear infinite;
 @keyframes floatAvatar{0%{transform:translateY(0);}50%{transform:translateY(-6px);}100%{transform:translateY(0);}}
 .mentorHeroName{font-size:30px;font-weight:800;margin-bottom:8px;letter-spacing:-.6px;}
 .mentorHeroRole{font-size:16px;color:var(--gray);}
+
+.msgUser{align-self:flex-end;background:linear-gradient(135deg,#0ab464,#08794b);color:white;padding:12px 16px;border-radius:18px 18px 4px 18px;max-width:80%;font-size:15px;line-height:1.6;}
+.msgBot{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);color:white;padding:12px 16px;border-radius:18px 18px 18px 4px;max-width:85%;font-size:15px;line-height:1.6;}
+.msgTyping{align-self:flex-start;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);padding:12px 20px;border-radius:18px;color:var(--gray);font-size:14px;}
+@keyframes typingDot{0%,80%,100%{opacity:.3;}40%{opacity:1;}}
+.typingDot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--gray);margin:0 2px;animation:typingDot 1.2s infinite;}
+.typingDot:nth-child(2){animation-delay:.2s;}
+.typingDot:nth-child(3){animation-delay:.4s;}
 .infoBlock{
 background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.03));
 border:1px solid rgba(255,255,255,.08);
@@ -409,6 +417,24 @@ html{scroll-behavior:smooth;}
   <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ</button>
 </div>
 
+<div id="page-chat" class="page" style="padding:0;display:flex;flex-direction:column;">
+  <div style="display:flex;align-items:center;gap:12px;padding:16px 20px;background:rgba(0,0,0,.3);flex-shrink:0;">
+    <div class="backButton" onclick="showPage('card')" style="margin:0;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div id="chatAvatar" style="width:40px;height:40px;border-radius:14px;overflow:hidden;flex-shrink:0;"></div>
+    <div>
+      <div id="chatName" style="font-size:16px;font-weight:700;"></div>
+      <div style="font-size:12px;color:var(--gray);">AI-наставник</div>
+    </div>
+  </div>
+  <div id="chatMessages" style="flex:1;overflow-y:auto;padding:16px 16px 100px;display:flex;flex-direction:column;gap:12px;"></div>
+  <div style="position:fixed;bottom:0;left:0;right:0;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:rgba(8,13,15,.95);backdrop-filter:blur(20px);display:flex;gap:10px;z-index:100;">
+    <textarea id="chatInput" placeholder="Задай вопрос наставнику..." style="flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 16px;color:white;font-size:15px;font-family:inherit;resize:none;outline:none;max-height:120px;min-height:48px;line-height:1.4;" rows="1"></textarea>
+    <button id="chatSend" onclick="sendChatMessage()" style="width:48px;height:48px;border-radius:14px;border:none;background:linear-gradient(135deg,#0ab464,#0ed77c);color:white;font-size:22px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;">↑</button>
+  </div>
+</div>
+
 <div id="page-premium" class="page">
   <div class="backButton" onclick="showPage('mentors')">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -535,8 +561,7 @@ function openMentor(id){
   btn.style.background=m.button;
   btn.style.color=m.buttonColor;
   btn.onclick=function(){
-    tg.openTelegramLink(BOT+"?start="+id);
-    setTimeout(function(){ tg.close(); }, 300);
+    startChat(id);
   };
   showPage("card");
 }
@@ -560,6 +585,124 @@ document.querySelectorAll(".bottomButton").forEach(btn=>{
   btn.addEventListener("touchstart",()=>{ btn.style.transform="scale(.98)"; });
   btn.addEventListener("touchend",()=>{ btn.style.transform=""; });
 });
+
+let currentMentorId = null;
+let chatHistory = [];
+
+const SYSTEM_PROMPTS = {
+  hormozi: 'Ты — Алекс Хормози, предприниматель и инвестор. Отвечай жёстко, по делу, без воды. Давай конкретные советы по бизнесу, продажам, масштабированию. Используй его стиль: прямой, честный, с конкретными примерами. Отвечай на русском языке.',
+  belfort: 'Ты — Джордан Белфорт, Волк с Уолл-стрит. Отвечай харизматично, уверенно, с энергией. Фокусируйся на продажах, переговорах, психологии убеждения. Используй его стиль: напористый, мотивирующий, практичный. Отвечай на русском языке.',
+  musk: 'Ты — Илон Маск, предприниматель и визионер. Отвечай через первые принципы, мысли масштабно, не бойся радикальных идей. Фокусируйся на инновациях, физике проблемы, долгосрочном мышлении. Отвечай на русском языке.'
+};
+
+function startChat(mentorId) {
+  currentMentorId = mentorId;
+  chatHistory = [];
+  const m = mentors[mentorId];
+  
+  // Настраиваем шапку чата
+  const avatarEl = document.getElementById('chatAvatar');
+  avatarEl.innerHTML = '<img src="'+m.photo+'" alt="'+m.name+'" style="width:100%;height:100%;object-fit:cover;border-radius:14px;">';
+  document.getElementById('chatName').textContent = m.name;
+  
+  // Очищаем сообщения
+  const msgs = document.getElementById('chatMessages');
+  msgs.innerHTML = '';
+  
+  // Приветственное сообщение
+  const greetings = {
+    hormozi: 'Слушай, я здесь. Задавай вопрос — разберём твой бизнес по-настоящему. Без воды, только суть.',
+    belfort: 'Слушай меня внимательно. Задавай вопрос — научу продавать так, чтобы не было отказа.',
+    musk: 'Задавай вопрос. Разберём твою задачу через first principles.'
+  };
+  addBotMessage(greetings[mentorId]);
+  showPage('chat');
+  
+  // Авто-рост textarea
+  const input = document.getElementById('chatInput');
+  input.addEventListener('input', function() {
+    this.style.height = 'auto';
+    this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+  });
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMessage();
+    }
+  });
+}
+
+function addBotMessage(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msgBot';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function addUserMessage(text) {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msgUser';
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chatMessages');
+  const div = document.createElement('div');
+  div.className = 'msgTyping';
+  div.id = 'typingIndicator';
+  div.innerHTML = '<span class="typingDot"></span><span class="typingDot"></span><span class="typingDot"></span>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() {
+  const t = document.getElementById('typingIndicator');
+  if (t) t.remove();
+}
+
+const RAG_API = 'https://business-mentor-dmitriy097.waw0.amvera.tech';
+
+async function sendChatMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || !currentMentorId) return;
+  
+  input.value = '';
+  input.style.height = 'auto';
+  addUserMessage(text);
+  
+  chatHistory.push({role: 'user', content: text});
+  showTyping();
+  document.getElementById('chatSend').disabled = true;
+  
+  try {
+    const response = await fetch(`${RAG_API}/chat`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        mentor: currentMentorId,
+        messages: chatHistory
+      })
+    });
+    const data = await response.json();
+    const reply = data.reply || data.error || 'Ошибка ответа';
+    chatHistory.push({role: 'assistant', content: reply});
+    hideTyping();
+    addBotMessage(reply);
+  } catch(e) {
+    hideTyping();
+    addBotMessage('Произошла ошибка. Попробуй ещё раз.');
+  }
+  
+  document.getElementById('chatSend').disabled = false;
+  document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+}
 
 window.onload=()=>{
   document.body.classList.add("loaded");
