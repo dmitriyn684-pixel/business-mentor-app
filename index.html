@@ -341,7 +341,7 @@ html{scroll-behavior:smooth;}
 
   <div class="mentorCard" onclick="openMentor('hormozi')">
     <div class="mentorLeft">
-      <div class="mentorIcon gold">💪</div>
+      <div class="mentorIcon gold"><img src="hormozi.png" alt="Хормози" style="width:100%;height:100%;object-fit:cover;border-radius:18px;"></div>
       <div>
         <div class="mentorTitle">Алекс Хормози</div>
         <div class="mentorDesc">Предприниматель · $200М/год</div>
@@ -355,7 +355,7 @@ html{scroll-behavior:smooth;}
 
   <div class="mentorCard" onclick="openMentor('belfort')">
     <div class="mentorLeft">
-      <div class="mentorIcon red">🐺</div>
+      <div class="mentorIcon red"><img src="belfort.png" alt="Белфорт" style="width:100%;height:100%;object-fit:cover;border-radius:18px;"></div>
       <div>
         <div class="mentorTitle">Джордан Белфорт</div>
         <div class="mentorDesc">Продажи · Straight Line</div>
@@ -369,7 +369,7 @@ html{scroll-behavior:smooth;}
 
   <div class="mentorCard" onclick="openMentor('musk')">
     <div class="mentorLeft">
-      <div class="mentorIcon blue">🚀</div>
+      <div class="mentorIcon blue"><img src="musk.png" alt="Маск" style="width:100%;height:100%;object-fit:cover;border-radius:18px;"></div>
       <div>
         <div class="mentorTitle">Илон Маск</div>
         <div class="mentorDesc">SpaceX · Tesla · Визионер</div>
@@ -406,7 +406,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v11)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v13)</button>
 </div>
 
 <div id="page-premium" class="page">
@@ -535,8 +535,7 @@ function openMentor(id){
   btn.style.background=m.button;
   btn.style.color=m.buttonColor;
   btn.onclick=function(){
-    tg.sendData(JSON.stringify({mentor:id}));
-    tg.close();
+    tg.openTelegramLink(BOT+"?start="+id);
   };
   showPage("card");
 }
@@ -548,8 +547,7 @@ function selectPlan(el,plan){
 }
 
 function buyPremium(){
-  tg.sendData(JSON.stringify({mentor:"premium",plan:selectedPlan}));
-  tg.close();
+  tg.openTelegramLink(BOT+"?start=premium_"+selectedPlan);
 }
 
 document.querySelectorAll(".mentorCard,.planCard,.card,.infoBlock").forEach(el=>{
