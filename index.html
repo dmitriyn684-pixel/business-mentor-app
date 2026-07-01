@@ -406,7 +406,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v15)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ</button>
 </div>
 
 <div id="page-premium" class="page">
@@ -536,6 +536,7 @@ function openMentor(id){
   btn.style.color=m.buttonColor;
   btn.onclick=function(){
     tg.openTelegramLink(BOT+"?start="+id);
+    setTimeout(function(){ tg.close(); }, 300);
   };
   showPage("card");
 }
