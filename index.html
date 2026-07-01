@@ -196,7 +196,7 @@ cursor:pointer;
 width:62px;height:62px;border-radius:18px;
 display:flex;align-items:center;justify-content:center;
 font-size:30px;border:1px solid rgba(255,255,255,.08);
-position:relative;overflow:hidden;
+position:relative;overflow:hidden;flex-shrink:0;
 }
 .mentorIcon::before{
 content:"";position:absolute;left:-80%;top:-40%;width:60%;height:180%;
@@ -297,13 +297,13 @@ html{scroll-behavior:smooth;}
 <body>
 
 <div id="loader">
-  <div class="loaderLogo">💼</div>
+  <div class="loaderLogo"><img src="logo.png" style="width:100%;height:100%;object-fit:cover;border-radius:26px;"></div>
   <div class="loaderText">Business Mentor AI</div>
 </div>
 
 <div id="page-home" class="page active">
   <div class="homeHero">
-    <div class="logo">💼</div>
+    <div class="logo"><img src="logo.png" style="width:100%;height:100%;object-fit:cover;border-radius:22px;"></div>
     <div class="eyebrow">AI-НАСТАВНИКИ МИРОВОГО УРОВНЯ</div>
     <h1>Твой бизнес —<br>их <span class="green">ОПЫТ</span></h1>
     <div class="subtitle">Общайся с AI-наставниками, обученными на философии, интервью, книгах, выступлениях и бизнес-мышлении лучших предпринимателей мира.</div>
@@ -341,7 +341,7 @@ html{scroll-behavior:smooth;}
 
   <div class="mentorCard" onclick="openMentor('hormozi')">
     <div class="mentorLeft">
-      <div class="mentorIcon gold"><img src="hormozi.png" alt="Хормози" style="width:100%;height:100%;object-fit:cover;border-radius:18px;"></div>
+      <div class="mentorIcon gold"><img src="hormozi.png" alt="Хормози" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:18px;"></div>
       <div>
         <div class="mentorTitle">Алекс Хормози</div>
         <div class="mentorDesc">Предприниматель · $200М/год</div>
@@ -355,7 +355,7 @@ html{scroll-behavior:smooth;}
 
   <div class="mentorCard" onclick="openMentor('belfort')">
     <div class="mentorLeft">
-      <div class="mentorIcon red"><img src="belfort.png" alt="Белфорт" style="width:100%;height:100%;object-fit:cover;border-radius:18px;"></div>
+      <div class="mentorIcon red"><img src="belfort.png" alt="Белфорт" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:18px;"></div>
       <div>
         <div class="mentorTitle">Джордан Белфорт</div>
         <div class="mentorDesc">Продажи · Straight Line</div>
@@ -369,7 +369,7 @@ html{scroll-behavior:smooth;}
 
   <div class="mentorCard" onclick="openMentor('musk')">
     <div class="mentorLeft">
-      <div class="mentorIcon blue"><img src="musk.png" alt="Маск" style="width:100%;height:100%;object-fit:cover;border-radius:18px;"></div>
+      <div class="mentorIcon blue"><img src="musk.png" alt="Маск" style="width:100%;height:100%;object-fit:cover;object-position:center top;border-radius:18px;"></div>
       <div>
         <div class="mentorTitle">Илон Маск</div>
         <div class="mentorDesc">SpaceX · Tesla · Визионер</div>
@@ -406,7 +406,7 @@ html{scroll-behavior:smooth;}
     <div class="blockTitle">🎯 ЭКСПЕРТИЗА</div>
     <div id="mentorSkills" class="blockText"></div>
   </div>
-  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v13)</button>
+  <button id="mentorButton" class="bottomButton">💬 НАЧАТЬ ДИАЛОГ (v15)</button>
 </div>
 
 <div id="page-premium" class="page">
